@@ -66,6 +66,7 @@ try {
     ; 🔍📺 Meh+T :: Focus on Windows (T)erminal window
     ^!+T::Window_FocusOrLaunchByProcess("WindowsTerminal.exe", "wt")
 
+    ; TODO: toggle back to previous size ("restore")
     ; ↕ Meh+V :: (V)ertically maximize the active window
     ^!+V::Window_VerticallyMaximize("A")
 
