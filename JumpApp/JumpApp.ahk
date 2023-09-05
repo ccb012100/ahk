@@ -1,13 +1,10 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;             Jump to an application                  ;;;
-;;;                                                     ;;;
-;;;         Displays a list of applications.            ;;;
-;;;                                                     ;;;
-;;;        Clicking the associated key for an           ;;;
-;;;         application brings it into focus            ;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-#Include JumpAppChoiceMap.ahk
+;;;
+;;; Jump to an application via hotkeys
+;;;
+;;; - When activated, a GUI is shown with a list of applications.
+;;; - Each application has an underlined character in its name; the underlined character is that app's hotkey.
+;;; - Clicking an application's hotkey brings it into focus, launching the app first if it's not already open.
+;;;
 
 ; Theming
 JumpApp__theme := {}
@@ -16,51 +13,147 @@ JumpApp__theme.GuiFontColor             := g_themes.dracula.Pink
 JumpApp__theme.ListBoxBackgroundColor   := g_themes.dracula.Comment
 
 try {
-    JumpApp__gui := Gui()
-    JumpApp__gui.BackColor := JumpApp__theme.GuiBackgroundColor
+    JumpApp__gui := JumpApp__Init()
+}
+catch as e {
+    MsgBox "An error was thrown:`nLine " . e.Line . ": " . e.Message
+}
+
+JumpApp__Init() {
+    jaGui := Gui()
+
+    ;; "Escape" event is fired on [Esc] key press
+    jaGui.OnEvent("Escape", JumpApp__Hide)
 
     ; -Caption :: remove title bar and a thick window border/edge
     ; -SysMenu :: omit the system menu and icon in the window's upper left corner
     ;;         :: omit the minimize, maximize, and close buttons in the title bar.
     ; +AlwaysOnTop :: what it sounds like
     ; +Owner :: Make the GUI owned by the script's main window to prevent display of a taskbar button.
-    JumpApp__gui.Opt("-Caption -SysMenu +AlwaysOnTop +Owner")
-    JumpApp__gui.SetFont("s14 c" . JumpApp__theme.GuiFontColor, "JetBrains Mono")
+    jaGui.Opt("-Caption -SysMenu +AlwaysOnTop +Owner")
+    jaGui.SetFont("s14 c" . JumpApp__theme.GuiFontColor, "JetBrains Mono")
+    jaGui.BackColor := JumpApp__theme.GuiBackgroundColor
 
-    JumpApp__listBoxItems := [] ; used to
-    JumpApp__choiceMap := JumpApp__BuildChoiceMap()
+    jaGui.Add("Text", "", JumpApp__GetAppText())
 
-    for mapKey in JumpApp__choiceMap
-        JumpApp__listBoxItems.Push(mapKey)
-
-    ; TODO: remove color on ListBox border
-    JumpApp__listBox := JumpApp__gui.Add(
-        "ListBox",
-        "sort" . " w400" . " r" . JumpApp__choiceMap.Count . " Background" . JumpApp__theme.ListBoxBackgroundColor,
-        JumpApp__listBoxItems
-    )
-
-    ; Register event hooks
-
-    ;; "Escape" event is fired on [Esc] key press
-    JumpApp__gui.OnEvent("Escape", (*) => JumpApp__gui.Hide())
-
-    ;; "Change" Event is fired when the ListBox selection changes; the selected item is in ListBox.Text
-    ;; Use the selected item to get the associated callback from the choice map and pass it to JumpApp__JumpToSelection
-    JumpApp__listBox.OnEvent("Change",(*) => JumpApp__JumpToSelection(JumpApp__choiceMap[JumpApp__listBox.Text]))
-}
-catch as e {
-    MsgBox "An error was thrown:`nLine " . e.Line . ": " . e.Message
+    return jaGui
 }
 
 JumpApp_Activate() {
-    JumpApp__gui.Show()
+    jumpApp__Show()
 }
 
-; TODO(maybe): figure out how to make it differentiate between upper/lowercase versions of the same letter
+; used for dynamically binding hotkeys
+JumpApp__isActive := false
+
+JumpApp__Hide(*) {
+    if (!JumpApp__isActive)
+        MsgBox "Expected JumpApp__isActive to be true!"
+
+    JumpApp__gui.Hide()
+    global JumpApp__isActive := false
+}
+
+JumpApp__Show() {
+    if (JumpApp__isActive)
+        MsgBox "Expected JumpApp__isActive to be false!"
+
+    global JumpApp__isActive := true
+    jumpApp__gui.Show()
+}
+
+JumpApp__Cancel() {
+    JumpApp__Hide()
+}
+
 ; TODO(maybe): if there are multiple of the same process, show selection list to choose
 JumpApp__JumpToSelection(Callback) {
     Callback()
 
-    JumpApp__gui.Hide()
+    JumpApp__Hide()
 }
+
+JumpApp__GetAppText() {
+    ; &  => causes the character following it to be underlined
+    ; `n => prints a newline
+    return "&chrome"
+        . "`n" . "&firefox"
+        . "`n" . "&github desktop"
+        . "`n" . "home folder"
+        . "`n" . "&edge"
+        . "`n" . "&Notepad"
+        . "`n" . "&notepad++"
+        . "`n" . "&outlook"
+        . "`n" . "&teams"
+        . "`n" . "&Visual studio"
+        . "`n" . "&vs code"
+}
+
+#HotIf JumpApp__isActive ; bind Hotkeys when JumpApp's ListBox is Visible
+    ; c -> Chrome
+    C::{
+        JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "chrome.exe",
+            "C:\Program Files\Google\Chrome\Application\chrome.exe" )
+    }
+
+    ; e => edge
+    E::{
+        JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "msedge.exe",
+            "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe --profile-directory=Default" )
+    }
+
+    ; f -> Firefox
+    F::{
+        JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "firefox.exe",
+            Format("{}\Mozilla Firefox\firefox.exe", g_APP_DATA_LOCAL_DIR) )
+    }
+
+    ; g -> GitHub Desktop
+    G::{
+        JumpApp__JumpToSelection () => Window_FocusOrLaunchByName( "GitHub Desktop",
+            Format("{}\GitHubDesktop\GitHubDesktop.exe", g_APP_DATA_LOCAL_DIR) )
+    }
+
+    ; TODO: handle scenario where A_UserName is different than the display name explorer uses
+    ; h -> Home Folder
+    H::{
+        JumpApp__JumpToSelection () => Window_FocusOrLaunchInFileExplorerByClsid( A_UserName,
+            "59031a47-3f72-44a7-89c5-5595fe6b30ee" )
+    }
+
+    ; Shift+N -> Notepad
+    +N::{
+        JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "notepad.exe",
+            Format("{}\system32\notepad.exe", A_WinDir) )
+    }
+
+    ; n -> Notepad++
+    N::{
+        JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "notepad++.exe",
+            "C:\Program Files\Notepad++\notepad++.exe" )
+    }
+
+    ; o -> Outlook
+    O::{
+        JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "outlook.exe",
+            "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE" )
+    }
+
+    ; t -> Teams
+    t::{
+        JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "teams.exe",
+            Format('{}\Microsoft\Teams\Update.exe --processStart "Teams.exe"', g_APP_DATA_LOCAL_DIR))
+    }
+
+    ; Shift+V -> Visual Studio
+    +V::{
+        JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "devenv.exe",
+            "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.exe")
+    }
+
+    ; v -> VS Code
+    v::{
+        JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "code.exe",
+            "C:\Program Files\Microsoft VS Code\Code.exe" )
+    }
+#HotIf

@@ -1,6 +1,6 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Functions for working with windows ;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;; Functions for working with windows
+;;;
 
 ; **WARNING**: this centers the Window on the Primary Monitor only
 ;;  TODO: support multiple displays
