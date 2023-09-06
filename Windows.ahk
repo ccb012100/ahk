@@ -1,9 +1,9 @@
-;;;
-;;; Functions for working with windows
-;;;
+;*
+;* Functions for working with windows
+;*
 
+;  TODO: support multiple displays
 ; **WARNING**: this centers the Window on the Primary Monitor only
-;;  TODO: support multiple displays
 Window_Center(WinTitle) {
     WinGetPos ,, &Width, &Height, WinTitle
     MonitorGetWorkArea( , &Left, &Top, &Right, &Bottom)
@@ -45,14 +45,15 @@ Window_FocusOrLaunchInFileExplorerByClsid(Title, CLSID) {
 }
 
 ; TODO: add support for multiple monitors
-;; **WARNING**: this assumes the active Window is on the Primary Monitor
+; **WARNING**: this assumes the active Window is on the Primary Monitor
 Window_VerticallyMaximize(WinTitle) {
     MonitorGetWorkArea( , &Left, &Top, &Right, &Bottom)
     WinGetPos(&X, &Y, &Width, &Height, WinTitle)
     WinMove(X, 0, , Bottom, WinTitle)
 }
+
 ; Print id, class, title, and control for the Window under the mouse cursor. Useful for debugging/developing
-;;  copied from <https://www.autohotkey.com/docs/v2/lib/MouseGetPos.htm>
+; copied from <https://www.autohotkey.com/docs/v2/lib/MouseGetPos.htm>
 Window_WatchCursor() {
     MouseGetPos , , &id, &control
 

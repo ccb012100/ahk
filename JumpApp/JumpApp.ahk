@@ -1,10 +1,9 @@
-;;;
-;;; Jump to an application via hotkeys
-;;;
-;;; - When activated, a GUI is shown with a list of applications.
-;;; - Each application has an underlined character in its name; the underlined character is that app's hotkey.
-;;; - Clicking an application's hotkey brings it into focus, launching the app first if it's not already open.
-;;;
+;* Jump to an application via hotkeys
+;*
+;* - When activated, a GUI is shown with a list of applications.
+;* - Each application has an underlined character in its name; the underlined character is that app's hotkey.
+;* - Clicking an application's hotkey brings it into focus, launching the app first if it's not already open.
+;*
 
 ; Theming
 JumpApp__theme := {}
@@ -22,12 +21,12 @@ catch as e {
 JumpApp__Init() {
     jaGui := Gui()
 
-    ;; "Escape" event is fired on [Esc] key press
+    ; "Escape" event is fired on [Esc] key press
     jaGui.OnEvent("Escape", JumpApp__Hide)
 
     ; -Caption :: remove title bar and a thick window border/edge
     ; -SysMenu :: omit the system menu and icon in the window's upper left corner
-    ;;         :: omit the minimize, maximize, and close buttons in the title bar.
+    ;          :: omit the minimize, maximize, and close buttons in the title bar.
     ; +AlwaysOnTop :: what it sounds like
     ; +Owner :: Make the GUI owned by the script's main window to prevent display of a taskbar button.
     jaGui.Opt("-Caption -SysMenu +AlwaysOnTop +Owner")
