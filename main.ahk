@@ -75,6 +75,25 @@ try {
 
     ; 🔊 Meh+<MINUS> :: Volume Down (-)
     ^!+-::SendInput "{Volume_Down}"
+
+    ;* Move window Left/Right to next display.
+    ;*
+    ;* We have to wait for Control and Alt to be released because
+    ;* the combination <Shift>+<Alt>+<Ctrl>+<Win> opens Microsoft Office.
+    ;* see: <https://superuser.com/a/1477395> for details.
+
+    ; 👈🏽🗔 Meh+, :: Move Window to next display on Left
+    ^!+,::{
+        KeyWait "Alt", "L"
+        KeyWait "Control", "L"
+        SendInput("+#{Left}")
+    }
+    ;; 🗔👉🏽 Meh+. :: Move Window to next display on Right
+    ^!+.::{
+        KeyWait "Alt", "L"
+        KeyWait "Control", "L"
+        SendInput "+#{Right}"
+    }
 }
 catch as e {
     MsgBox Format("An error was thrown:`nLine {}: {}", e.Line, e.Message)
