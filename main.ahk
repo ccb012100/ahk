@@ -25,10 +25,10 @@ g_themes := {}
 
 try {
     ^!+F5::Reload           ; 🔃 Meh+F5 :: Reload this script
-    ^!+Q::SendInput "!{F4}" ; 🛑 Meh+Q :: (Q)uit the focused application by sending Alt+F4
+    ^!+Q::SendInput "!{F4}" ; 🛑 Meh+Q  :: (Q)uit the focused application by sending Alt+F4
     ^!+R::Reload            ; 🔃 Meh+R  :: Reload this script
 
-    ; ✍🏽 Meh+F2h :: Edit this script
+    ; ✍🏽 Meh+F2 :: Edit this script
     ;*      I could also just use the command `Edit`, but I don't want to
     ;*      have to worry about the file association for *.ahk files
     ^!+F2::Run Format( "C:\Program Files\Microsoft VS Code\Code.exe {}", A_ScriptDir )
@@ -38,9 +38,12 @@ try {
         if WinExist( "A" )
             WinMinimize "A"
     }
+
     ; 📶 Meh+B :: Open (B)luetooth settings
-    ^!+B::Window_FocusOrLaunchByName( 'Settings ahk_exe ApplicationFrameHost.exe', ; filter on Title and Process
-        'ms-settings:bluetooth' )
+    ^!+B::Window_FocusOrLaunchByName(
+        'Settings ahk_exe ApplicationFrameHost.exe', ; filter on Title and Process
+        'ms-settings:bluetooth'
+    )
 
     ; 🎯 Meh+C :: (C)enter the active window
     ^!+C::{
