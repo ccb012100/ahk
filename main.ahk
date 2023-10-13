@@ -69,6 +69,10 @@ try {
     ; 🔍📺 Meh+T :: Focus on Windows (T)erminal window
     ^!+T::Window_FocusOrLaunchByProcess( "WindowsTerminal.exe", "wt" )
 
+    ; 🔍📺 Meh+T :: Focus on (T)erminal window
+    ; ^!+T::Window_FocusOrLaunchByProcess( "WindowsTerminal.exe", "wt" )
+    ^!+T::Window_FocusOrLaunchByProcess( "wezterm-gui.exe", "C:\Program Files\WezTerm\wezterm-gui.exe" )
+
     ; TODO: toggle back to previous size ("restore")
     ; ↕ Meh+V :: (V)ertically maximize the active window
     ^!+V::Window_VerticallyMaximize "A"
