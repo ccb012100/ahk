@@ -64,10 +64,21 @@ try {
     ^!+P::SendInput "{Media_Play_Pause}"
 
      ; Meh+S 🔍🎧 Focus on (S)potify window
-    ^!+S::Window_FocusOrLaunchByProcess( "Spotify.exe", A_AppData . "\Spotify\Spotify.exe" )
+    ^!+S::{
+        spotify_exe := "Spotify.exe"
 
-    ; 🔍📺 Meh+T :: Focus on Windows (T)erminal window
-    ^!+T::Window_FocusOrLaunchByProcess( "WindowsTerminal.exe", "wt" )
+        if A_UserName == "chris" {
+            ;* To run an an app installed through the Microsoft Store:
+            ;*
+            ;* - Win+R -> shell:AppsFolder
+            ;* - Find the app, right-click and choose "Create shortcut"
+            spotify_exe_path := "C:\Users\chris\Links\Spotify"
+        }
+        else{
+            spotify_exe_path := A_AppData . "\Spotify\Spotify.exe"
+        }
+        Window_FocusOrLaunchByProcess( "Spotify.exe", spotify_exe_path)
+    }
 
     ; 🔍📺 Meh+T :: Focus on (T)erminal window
     ; ^!+T::Window_FocusOrLaunchByProcess( "WindowsTerminal.exe", "wt" )
