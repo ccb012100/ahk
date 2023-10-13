@@ -84,9 +84,15 @@ try {
         Window_FocusOrLaunchByProcess( "Spotify.exe", spotify_exe_path)
     }
 
-    ; 🔍📺 Meh+T :: Focus on (T)erminal window
-    ; ^!+T::Window_FocusOrLaunchByProcess( "WindowsTerminal.exe", "wt" )
-    ^!+T::Window_FocusOrLaunchByProcess( "wezterm-gui.exe", "C:\Program Files\WezTerm\wezterm-gui.exe" )
+    ; 📺 Meh+T :: (T)erminal
+    ^!+T::{
+        ; kmonad doesn't seem to coexist well with Wezterm, so we use Windows Terminal instead if it's running
+        if WinExist( "ahk_exe kmonad.exe" ) {
+            Window_FocusOrLaunchByProcess( "WindowsTerminal.exe", "wt" )
+        }
+        else{
+            Window_FocusOrLaunchByProcess( "wezterm-gui.exe", "C:\Program Files\WezTerm\wezterm-gui.exe" )
+        }
 
     ; TODO: toggle back to previous size ("restore")
     ; ↕ Meh+V :: (V)ertically maximize the active window
