@@ -79,7 +79,8 @@ JumpApp__GetAppText() {
         . "`n" . "&firefox"
         . "`n" . "&github desktop"
         . "`n" . "home folder"
-        . "`n" . "&edge"
+        . "`n" . "&Edge"
+        . "`n" . "&explorer"
         . "`n" . "&Notepad"
         . "`n" . "&notepad++"
         . "`n" . "&outlook"
@@ -95,10 +96,16 @@ JumpApp__GetAppText() {
             "C:\Program Files\Google\Chrome\Application\chrome.exe" )
     }
 
-    ; e => edge
-    E::{
+    ; Shift+E => edge
+    +E::{
         JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "msedge.exe",
             "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe --profile-directory=Default" )
+    }
+
+    ; e -> Explorer.exe
+    E::{
+        JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "ahk_class CabinetWClass ahk_exe explorer.exe",
+            "explorer.exe" )
     }
 
     ; f -> Firefox
@@ -120,7 +127,7 @@ JumpApp__GetAppText() {
             "59031a47-3f72-44a7-89c5-5595fe6b30ee" )
     }
 
-    ; Shift+N -> Notepad
+    ; Shift+N => Notepad
     +N::{
         JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "notepad.exe",
             Format("{}\system32\notepad.exe", A_WinDir) )
@@ -144,7 +151,7 @@ JumpApp__GetAppText() {
             Format('{}\Microsoft\Teams\Update.exe --processStart "Teams.exe"', g_APP_DATA_LOCAL_DIR))
     }
 
-    ; Shift+V -> Visual Studio
+    ; Shift+V => Visual Studio
     +V::{
         JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "devenv.exe",
             "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.exe")
