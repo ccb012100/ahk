@@ -50,6 +50,12 @@ try {
 
     ; 📁 Meh+D :: Open (D)ownloads folder
     ^!+D::Window_FocusOrLaunchInFileExplorerByClsid( "Downloads", "088e3905-0323-4b02-9826-5d99428e115f" )
+    ; 👀 Meh+F :: (F)ocus current window (hide all other windows)
+    ^!+F::{
+        KeyWait "Alt", "L"
+        KeyWait "Control", "L"
+        SendInput "#{Home}"
+    }
 
     ; 🦘 Meh+J :: (J)ump to Application
     ^!+J::JumpApp_Activate
