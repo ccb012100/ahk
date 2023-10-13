@@ -51,10 +51,10 @@ try {
             Window_Center "A"
     }
 
-    ; 📁 Meh+D :: Open (E)xplorer to Downloads folder
+    ; 📁 Meh+D :: (E)xplorer
     ^!+E::Window_FocusOrLaunchInFileExplorerByClsid( "Downloads", "088e3905-0323-4b02-9826-5d99428e115f" )
 
-    ; 👀 Meh+F :: (F)ocus current window (hide all other windows)
+    ; 👀 Meh+F :: (F)ocus on current window (hide all other windows)
     ^!+F::{
         KeyWait "Alt", "L"
         KeyWait "Control", "L"
@@ -64,10 +64,10 @@ try {
     ; 🦘 Meh+J :: (J)ump to Application
     ^!+J::JumpApp_Activate
 
-    ; ⏯️🎧 Meh+P :: Press (P)lay/Pause button
+    ; ⏯️ Meh+P :: Press (P)lay/Pause button
     ^!+P::SendInput "{Media_Play_Pause}"
 
-     ; Meh+S 🔍🎧 Focus on (S)potify window
+    ; 🎧 Meh+S :: (S)potify
     ^!+S::{
         spotify_exe := "Spotify.exe"
 
@@ -93,12 +93,13 @@ try {
         else{
             Window_FocusOrLaunchByProcess( "wezterm-gui.exe", "C:\Program Files\WezTerm\wezterm-gui.exe" )
         }
+    }
 
     ; TODO: toggle back to previous size ("restore")
     ; ↕ Meh+V :: (V)ertically maximize the active window
     ^!+V::Window_VerticallyMaximize "A"
 
-    ; 👀 Meh+W :: Show info for the window under the cursor
+    ; 🔍 Meh+W :: Show info for the window under the cursor
     ^!+W::Window_WatchCursor
 
     ; 🔊 Meh+<EQUALS> :: Volume Up (+)
