@@ -55,3 +55,24 @@ organized and understandable.
 ---
 
 Note that these rules compose.
+
+## TODO
+
+- [ ] `Meh-V` -> Restore window size on 2nd click
+- [ ] Send active window to back (i.e. behind all open windows)
+  - `WinMoveBottom("A")` is not what I want; it works more like `Alt-Esc`
+
+### `Windows.ahk`
+
+- [ ] `Window_VerticallyMaximize` - support multiple displays
+- [ ] `Window_Center` - support multiple displays
+- [ ] Cycle through Windows of active app (same as `` alt-` `` in **Mac**/**Linux**)
+
+### `JumpApp.ahk`
+
+- [ ] `JumpApp__JumpToSelection` - show selection list if the selected process has multiple windows
+- [ ] Opening **Home** folder - handle scenario where `A_UserName` is different than the display name **Explorer** uses
+
+### Themes
+
+- [ ] Detect system light/dark setting

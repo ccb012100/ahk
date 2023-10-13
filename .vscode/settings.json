@@ -7,8 +7,11 @@
         "luetooth",
         "msedge",
         "nahk",
+        "ocus",
         "ownloads",
         "potify",
-        "rofi"
+        "rofi",
+        "wezterm",
+        "xplorer"
     ]
 }
