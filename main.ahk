@@ -1,4 +1,4 @@
-﻿#Warn
+#Warn
 #SingleInstance Force
 #Requires AutoHotkey >=2.0
 
@@ -33,12 +33,6 @@ try {
     ;*      have to worry about the file association for *.ahk files
     ^!+F2::Run Format( "C:\Program Files\Microsoft VS Code\Code.exe {}", A_ScriptDir )
 
-    ; 🙈 Meh+H :: (H)ide the active window
-    ^!+H::{
-        if WinExist( "A" )
-            WinMinimize "A"
-    }
-
     ; 📶 Meh+B :: Open (B)luetooth settings
     ^!+B::Window_FocusOrLaunchByName(
         'Settings ahk_exe ApplicationFrameHost.exe', ; filter on Title and Process
@@ -61,10 +55,29 @@ try {
         SendInput "#{Home}"
     }
 
+    ; 🙈 Meh+H :: (H)ide the active window
+    ^!+H::{
+        if WinExist( "A" )
+            WinMinimize "A"
+    }
+
     ; 🦘 Meh+J :: (J)ump to Application
     ^!+J::JumpApp_Activate
 
-    ; ⏯️ Meh+P :: Press (P)lay/Pause button
+    ; ⏯️ Meh+M :: (M)ove Window to the back
+    ^!+M::SendInput "!{Escape}"
+
+    ; ✈️ Meh+O :: (O)verview
+    ^!+O::{
+        ;* We have to wait for Control and Alt to be released because
+        ;* the combination <Shift>+<Alt>+<Ctrl>+<Win> opens Microsoft Office.
+        ;* see: <https://superuser.com/a/1477395> for details.
+        KeyWait "Alt", "L"
+        KeyWait "Control", "L"
+        SendInput "#{Tab}"
+    }
+
+    ; ⏯️🎧 Meh+P :: (P)lay/Pause
     ^!+P::SendInput "{Media_Play_Pause}"
 
     ; 🎧 Meh+S :: (S)potify
@@ -126,7 +139,19 @@ try {
         KeyWait "Control", "L"
         SendInput "+#{Right}"
     }
+
+    ;; 📉 Meh+/ or Meh+z (i.e. both Meh keys simultaneously) - Task Manager
+    ^!+z::
+    ^!+/::{
+        ; this will error out if the user does not allow running taskmgr as Administrator
+        try{
+            Window_FocusOrLaunchByName( 'ahk_class TaskManagerWindow', 'taskmgr.exe' )
+        }
+        catch{
+            ; TODO: handle user cancellation
+        }
+    }
 }
 catch as e {
-    MsgBox Format("An error was thrown:`nLine {}: {}", e.Line, e.Message)
+    MsgBox Format( "An error was thrown:`nLine {}: {}", e.Line, e.Message )
 }
