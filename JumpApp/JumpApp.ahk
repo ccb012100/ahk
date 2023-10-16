@@ -7,9 +7,8 @@
 
 ; Theming
 JumpApp__theme := {}
-JumpApp__theme.GuiBackgroundColor       := g_themes.dracula.Background
-JumpApp__theme.GuiFontColor             := g_themes.dracula.Pink
-JumpApp__theme.ListBoxBackgroundColor   := g_themes.dracula.Comment
+JumpApp__theme.GuiBackgroundColor       := g_themes.custom.Background
+JumpApp__theme.GuiFontColor             := g_themes.custom.Red
 
 try {
     JumpApp__gui := JumpApp__Init()

@@ -1,4 +1,4 @@
-#Warn
+﻿#Warn
 #SingleInstance Force
 #Requires AutoHotkey >=2.0
 
@@ -8,8 +8,7 @@ g_USER_HOME_DIR := "C:\Users\" . A_UserName
 g_APP_DATA_LOCAL_DIR := g_user_home_dir . "\AppData\Local"
 g_themes := {}
 
-#Include Themes/Dracula.ahk
-#Include Themes/Gruvbox.ahk
+#Include Themes/Custom.ahk
 
 #Include Windows.ahk
 
