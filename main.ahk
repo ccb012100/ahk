@@ -32,6 +32,8 @@ try {
     ;*      have to worry about the file association for *.ahk files
     ^!+F2::Run Format( "C:\Program Files\Microsoft VS Code\Code.exe {}", A_ScriptDir )
 
+    ^!+;::Window_SwitchMultiple()   ; ♻️ Meh+; :: Switch between windows of th active application
+
     ; 📶 Meh+B :: Open (B)luetooth settings
     ^!+B::Window_FocusOrLaunchByName(
         'Settings ahk_exe ApplicationFrameHost.exe', ; filter on Title and Process

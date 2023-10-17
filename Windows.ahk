@@ -70,3 +70,25 @@ Window_WatchCursor() {
 
     SetTimer () => ToolTip(), -5000 ; display Tooltip for 5 seconds
 }
+
+; switch between windows of the active application
+; source: <https://superuser.com/a/1783158>
+Window_SwitchMultiple() {
+    win_class := WinGetClass("A")
+    active_process_name := WinGetProcessName("A")
+
+    ; We have to be extra careful about explorer.exe since that process is responsible for more than the file explorer
+    if (active_process_name = "explorer.exe")
+        win_list := WinGetList("ahk_exe" active_process_name " ahk_class" win_class)
+    else
+        win_list := WinGetList("ahk_exe" active_process_name)
+
+    ; Calculate index of the next window. Since activating a window puts it at the top of the list, we have to take from
+    ; the bottom.
+    next_window_i := win_list.Length
+    next_window_id := win_list[win_list.Length]
+
+    ; Activate the next window and send it to the top.
+    WinMoveTop("ahk_id" next_window_id)
+    WinActivate("ahk_id" next_window_id)
+}
