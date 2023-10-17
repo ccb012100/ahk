@@ -83,9 +83,8 @@ Window_SwitchMultiple() {
     else
         win_list := WinGetList("ahk_exe" active_process_name)
 
-    ; Calculate index of the next window. Since activating a window puts it at the top of the list, we have to take from
-    ; the bottom.
-    next_window_i := win_list.Length
+    ; Calculate index of the next window. Since activating a window puts it at the top of the list,
+    ; we have to take from the bottom.
     next_window_id := win_list[win_list.Length]
 
     ; Activate the next window and send it to the top.
