@@ -21,7 +21,7 @@ g_themes := {}
 ;  +   Shift
 
 try {
-    ^!+Space::JumpApp_Activate  ; 🦘 Meh+SPACE :: Jump to Application (similar to Alt+Space for PowerToysRun)
+    ^!+Space::JumpApp_Activate  ; 🦘 Meh+SPACE :: Jump to Application (similar to Alt+Space for PowerToys Run)
 
     ; ✍🏽 Meh+F2 :: Edit this script
     ;*      I could also just use the command `Edit`, but I don't want to
