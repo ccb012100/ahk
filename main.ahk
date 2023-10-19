@@ -9,9 +9,7 @@ g_APP_DATA_LOCAL_DIR := g_user_home_dir . "\AppData\Local"
 g_themes := {}
 
 #Include Themes/Custom.ahk
-
 #Include Windows.ahk
-
 #Include JumpApp/JumpApp.ahk ; must come *after* Windows.ahk
 
 ; Active Window has WinTitle "A"
@@ -23,15 +21,14 @@ g_themes := {}
 ;  +   Shift
 
 try {
-    ^!+F5::Reload           ; 🔃 Meh+F5 :: Reload this script
-    ^!+Q::SendInput "!{F4}" ; 🛑 Meh+Q  :: (Q)uit the focused application by sending Alt+F4
-    ^!+R::Reload            ; 🔃 Meh+R  :: Reload this script
+    ^!+Space::JumpApp_Activate  ; 🦘 Meh+SPACE :: Jump to Application (similar to Alt+Space for PowerToysRun)
 
     ; ✍🏽 Meh+F2 :: Edit this script
     ;*      I could also just use the command `Edit`, but I don't want to
     ;*      have to worry about the file association for *.ahk files
     ^!+F2::Run Format( "C:\Program Files\Microsoft VS Code\Code.exe {}", A_ScriptDir )
 
+    ^!+F5::Reload                   ; 🔃 Meh+F5 :: Reload this script
     ^!+;::Window_SwitchMultiple()   ; ♻️ Meh+; :: Switch between windows of th active application
 
     ; 📶 Meh+B :: Open (B)luetooth settings
@@ -62,9 +59,6 @@ try {
             WinMinimize "A"
     }
 
-    ; 🦘 Meh+J :: (J)ump to Application
-    ^!+J::JumpApp_Activate
-
     ; ⏯️ Meh+M :: (M)ove Window to the back
     ^!+M::SendInput "!{Escape}"
 
@@ -80,6 +74,8 @@ try {
 
     ; ⏯️🎧 Meh+P :: (P)lay/Pause
     ^!+P::SendInput "{Media_Play_Pause}"
+    ^!+Q::SendInput "!{F4}"     ; 🛑 Meh+Q  :: (Q)uit the focused application by sending Alt+F4
+    ^!+R::Reload                ; 🔃 Meh+R  :: Reload this script
 
     ; 🎧 Meh+S :: (S)potify
     ^!+S::{
@@ -114,13 +110,10 @@ try {
     ; TODO: toggle back to previous size ("restore")
     ; ↕ Meh+V :: (V)ertically maximize the active window
     ^!+V::Window_VerticallyMaximize "A"
-
     ; 🔍 Meh+W :: Show info for the window under the cursor
     ^!+W::Window_WatchCursor
-
     ; 🔊 Meh+<EQUALS> :: Volume Up (+)
     ^!+=::SendInput "{Volume_Up}"
-
     ; 🔊 Meh+<MINUS> :: Volume Down (-)
     ^!+-::SendInput "{Volume_Down}"
 
@@ -129,15 +122,12 @@ try {
     ;* We have to wait for Control and Alt to be released because
     ;* the combination <Shift>+<Alt>+<Ctrl>+<Win> opens Microsoft Office.
     ;* see: <https://superuser.com/a/1477395> for details.
-
-    ; 👈🏽🗔 Meh+, :: Move Window to next display on Left
-    ^!+,::{
+    ^!+,::{ ; 👈🏽🗔 Meh+, :: Move Window to next display on Left
         KeyWait "Alt", "L"
         KeyWait "Control", "L"
         SendInput("+#{Left}")
     }
-    ;; 🗔👉🏽 Meh+. :: Move Window to next display on Right
-    ^!+.::{
+    ^!+.::{ ; 🗔👉🏽 Meh+. :: Move Window to next display on Right
         KeyWait "Alt", "L"
         KeyWait "Control", "L"
         SendInput "+#{Right}"
