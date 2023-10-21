@@ -96,8 +96,18 @@ try {
 
     ; 📺 Meh+T :: (T)erminal
     ^!+T::{
-        ; Window_FocusOrLaunchByProcess( "WindowsTerminal.exe", "wt" )
-        Window_FocusOrLaunchByProcess( "wezterm-gui.exe", "C:\Program Files\WezTerm\wezterm-gui.exe" )
+        wez_term_exe := "ahk_exe wezterm-gui.exe"
+        win_term_exe := "ahk_exe WindowsTerminal.exe"
+
+        if WinExist(wez_term_exe) { ; if WezTerm is running, focus that
+            WinActivate(wez_term_exe)
+        }
+        else if WinExist(win_term_exe) { ; if Windows Terminal is running, focus that
+            WinActivate(win_term_exe)
+        }
+        else { ; open a new instance of WezTerm
+            Run "C:\Program Files\WezTerm\wezterm-gui.exe"
+        }
     }
 
     ; TODO: toggle back to previous size ("restore")
