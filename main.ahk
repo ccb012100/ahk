@@ -96,15 +96,8 @@ try {
 
     ; 📺 Meh+T :: (T)erminal
     ^!+T::{
-        Window_FocusOrLaunchByProcess( "WindowsTerminal.exe", "wt" )
-        ; FIXME: only works on 1 of my laptops
-        ; kmonad doesn't seem to coexist well with Wezterm, so we use Windows Terminal instead if it's running
-        ; if WinExist( "ahk_exe kmonad.exe" ) {
-        ;     Window_FocusOrLaunchByProcess( "WindowsTerminal.exe", "wt" )
-        ; }
-        ; else{
-        ;     Window_FocusOrLaunchByProcess( "wezterm-gui.exe", "C:\Program Files\WezTerm\wezterm-gui.exe" )
-        ; }
+        ; Window_FocusOrLaunchByProcess( "WindowsTerminal.exe", "wt" )
+        Window_FocusOrLaunchByProcess( "wezterm-gui.exe", "C:\Program Files\WezTerm\wezterm-gui.exe" )
     }
 
     ; TODO: toggle back to previous size ("restore")
