@@ -21,8 +21,6 @@ g_themes := {}
 ;  +   Shift
 
 try {
-    ^!+Space::JumpApp_Activate  ; 🦘 Meh+SPACE :: Jump to Application (similar to Alt+Space for PowerToys Run)
-
     ; ✍🏽 Meh+F2 :: Edit this script
     ;*      I could also just use the command `Edit`, but I don't want to
     ;*      have to worry about the file association for *.ahk files
@@ -58,6 +56,8 @@ try {
         if WinExist( "A" )
             WinMinimize "A"
     }
+
+    ^!+J::JumpApp_Activate  ; 🦘 Meh+J :: Jump to Application (similar to Alt+Space for PowerToys Run)
 
     ; ⏯️ Meh+M :: (M)ove Window to the back
     ^!+M::SendInput "!{Escape}"
