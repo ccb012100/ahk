@@ -146,8 +146,7 @@ JumpApp__GetAppText() {
 
     ; t -> Teams
     t::{
-        JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "teams.exe",
-            Format('{}\Microsoft\Teams\Update.exe --processStart "Teams.exe"', g_APP_DATA_LOCAL_DIR))
+        JumpApp__JumpToSelection () => Window_FocusOrLaunchByProcess( "ms-teams.exe",'ms-teams.exe' )
     }
 
     ; Shift+V => Visual Studio
