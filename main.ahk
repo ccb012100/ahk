@@ -81,6 +81,10 @@ try {
     ^!+S::{
         spotify_exe := "Spotify.exe"
 
+        ; if Spotify is already active, go to "Currently Playing"
+        if WinGetProcessName("A") == spotify_exe
+            SendInput "!+J" ; Alt+Shift+J
+
         if A_UserName == "chris" {
             ;* To run an an app installed through the Microsoft Store:
             ;*
