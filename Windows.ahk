@@ -77,11 +77,9 @@ Window_SwitchMultiple() {
     win_class := WinGetClass("A")
     active_process_name := WinGetProcessName("A")
 
-    ; We have to be extra careful about explorer.exe since that process is responsible for more than the file explorer
-    if (active_process_name = "explorer.exe")
-        win_list := WinGetList("ahk_exe" active_process_name " ahk_class" win_class)
-    else
-        win_list := WinGetList("ahk_exe" active_process_name)
+    ; We have to be extra careful about explorer.exe (since that process is
+    ; responsible for more than the file explorer), so we specify ProcessName and Class
+    win_list := WinGetList("ahk_exe" active_process_name " ahk_class" win_class)
 
     ; Calculate index of the next window. Since activating a window puts it at the top of the list,
     ; we have to take from the bottom.
