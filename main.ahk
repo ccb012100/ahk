@@ -21,6 +21,9 @@ g_themes := {}
 ;  +   Shift
 
 try {
+    ; 🔍 Meh+F1 :: Show info for the window under the cursor
+    ^!+F1::Window_WatchCursor
+
     ; ✍🏽 Meh+F2 :: Edit this script
     ;*      I could also just use the command `Edit`, but I don't want to
     ;*      have to worry about the file association for *.ahk files
@@ -117,8 +120,12 @@ try {
     ; TODO: toggle back to previous size ("restore")
     ; ↕ Meh+V :: (V)ertically maximize the active window
     ^!+V::Window_VerticallyMaximize "A"
-    ; 🔍 Meh+W :: Show info for the window under the cursor
-    ^!+W::Window_WatchCursor
+
+    ; 🙈 Meh+W :: Minimize the active (W)indow (same as Meh+H so I can do it one-handed while using the mouse)
+    ^!+W::{
+        if WinExist( "A" )
+            WinMinimize "A"
+    }
     ; 🔊 Meh+<EQUALS> :: Volume Up (+)
     ^!+=::SendInput "{Volume_Up}"
     ; 🔊 Meh+<MINUS> :: Volume Down (-)
