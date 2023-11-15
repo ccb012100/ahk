@@ -76,7 +76,7 @@ try {
     }
 
     ; ⏯️🎧 Meh+P :: (P)lay/Pause
-    ^!+P::SendInput "{Media_Play_Pause}"
+    ; ^!+P::SendInput "{Media_Play_Pause}"
     ^!+Q::SendInput "!{F4}"     ; 🛑 Meh+Q  :: (Q)uit the focused application by sending Alt+F4
     ^!+R::Reload                ; 🔃 Meh+R  :: Reload this script
 
